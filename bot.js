@@ -4,9 +4,10 @@ var cool = require('cool-ascii-faces');
 var botID = process.env.BOT_ID;
 
 function respond() {
-  var mins = datetime.mins();    
+  var request = JSON.parse(this.req.chunks[0]),
+      botRegex = /^the.*$/;
 
-  if(mins == "00"){
+  if(request.text && botRegex.test(request.text)) {
     this.res.writeHead(200);
     postMessage();
     this.res.end();
