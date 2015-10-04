@@ -4,10 +4,9 @@ var cool = require('cool-ascii-faces');
 var botID = process.env.BOT_ID;
 
 function respond() {
-  var request = JSON.parse(this.req.chunks[0]),
-      botRegex = /^\/cool guy$/;
+  var mins = datetime.mins();    
 
-  if(request.text && botRegex.test(request.text)) {
+  if(mins == "00"){
     this.res.writeHead(200);
     postMessage();
     this.res.end();
@@ -21,7 +20,7 @@ function respond() {
 function postMessage() {
   var botResponse, options, body, botReq;
 
-  botResponse = cool();
+  
 
   options = {
     hostname: 'api.groupme.com',
@@ -30,11 +29,17 @@ function postMessage() {
   };
 
   body = {
-    "bot_id" : botID,
-    "text" : botResponse
+    "bot_id"  : "57262a5d2ff09251b2352465b0",
+    "text"    : "<3",
+    "attachments" : [
+      {
+        "type"  : "image",
+        "url"   : "http://www1.pictures.stylebistro.com/gi/End+Love+Portraits+2012+Sundance+Film+Festival+PfeRw4FWUjYx.jpg"
+      }
+    ]
   };
 
-  console.log('sending ' + botResponse + ' to ' + botID);
+  console.log('sending image to ' + botID);
 
   botReq = HTTPS.request(options, function(res) {
       if(res.statusCode == 202) {
@@ -53,5 +58,11 @@ function postMessage() {
   botReq.end(JSON.stringify(body));
 }
 
+while(true) {
+  d = new Date();
+  if ((d.getMinutes() == '00') && (d.getSeconds() == '00')){
+    respond();
+  }  
+}
 
 exports.respond = respond;
