@@ -59,11 +59,4 @@ function postMessage() {
   botReq.end(JSON.stringify(body));
 }
 
-while(true) {
-  d = new Date();
-  if ((d.getMinutes() == '00') && (d.getSeconds() == '00')){
-    respond();
-  }  
-}
-
 exports.respond = respond;
